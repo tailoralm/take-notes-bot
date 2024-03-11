@@ -2,7 +2,6 @@ import {Context} from "telegraf";
 import { Message } from 'typegram';
 import { default as axios } from 'axios';
 import * as fs from "fs";
-import * as GeneralUtils from '../../utils/general-utils';
 import * as PhotoUtils from '../../utils/photo-utils';
 
 export default class SaveReceiptsController {
@@ -17,7 +16,7 @@ export default class SaveReceiptsController {
     const file = await ctx.telegram.getFile(PhotoUtils.getFileId(message.photo));
 
     try {
-      const response = await GeneralUtils.getPhotoData(file);
+      const response = await PhotoUtils.getPhotoData(file);
       const today = new Date();
       const fileName = `downloads/receipt/${splitCaption[1]}_${today.getFullYear()}_${today.getMonth()+1}_${today.getDate()}.jpg`;
       fs.writeFileSync(fileName, response.data);

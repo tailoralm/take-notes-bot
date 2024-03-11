@@ -1,11 +1,13 @@
 import 'dotenv/config';
 import {Telegraf, Context} from 'telegraf';
 import PhotoMessageController from "./router/photo-message.controller";
+import AudioMessageController from "./router/audio-message.controller";
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN!);
 bot.use(checkAuthorization);
 
 PhotoMessageController.router(bot);
+AudioMessageController.router(bot);
 
 bot.command('start', (ctx: Context) => {
   const first_name = ctx.from?.first_name;
