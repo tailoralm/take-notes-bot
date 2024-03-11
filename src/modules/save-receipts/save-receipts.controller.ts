@@ -2,31 +2,24 @@ import {Context} from "telegraf";
 import { Message } from 'typegram';
 import { default as axios } from 'axios';
 import * as fs from "fs";
+import * as GeneralUtils from '../../utils/general-utils';
+import * as PhotoUtils from '../../utils/photo-utils';
 
 export default class SaveReceiptsController {
   constructor() {}
-  public static async save(ctx: Context) {
+  public static async saveThisPhoto(ctx: Context) {
     console.log('Receipt command activated!')
 
     const message = ctx.message as Message.PhotoMessage;
-    if(!message.photo) {
-      return ctx.reply('Please attatch a photo!');
-    }
 
-    const photo = message.photo.reduce((prev: any, current: any) => (prev.file_size > current.file_size) ? prev : current);
+    const splitCaption = message.caption?.split(' ') as string[];
 
-
-    const fileID = photo.file_id;
-    const file = await ctx.telegram.getFile(fileID);
-    const filePath = file.file_path;
-    const fileUrl = `https://api.telegram.org/file/bot${process.env.TELEGRAM_TOKEN}/${filePath}`;
+    const file = await ctx.telegram.getFile(PhotoUtils.getFileId(message.photo));
 
     try {
-      const response = await axios.get(fileUrl, {
-        responseType: 'arraybuffer'
-      });
-
-      const fileName = `image_${Date.now()}.jpg`;
+      const response = await GeneralUtils.getPhotoData(file);
+      const today = new Date();
+      const fileName = `downloads/receipt/${splitCaption[1]}_${today.getFullYear()}_${today.getMonth()+1}_${today.getDate()}.jpg`;
       fs.writeFileSync(fileName, response.data);
 
     } catch (error) {
@@ -34,7 +27,6 @@ export default class SaveReceiptsController {
       ctx.reply('Failed to download the image.');
     }
 
-    // Reply to the user
     return ctx.reply('Image saved successfully!');
   }
 }

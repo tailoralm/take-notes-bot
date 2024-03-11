@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import {Telegraf, Context} from 'telegraf';
-import PhotoMessageController from "./modules/router/photo-message.controller";
+import PhotoMessageController from "./router/photo-message.controller";
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN!);
 bot.use(checkAuthorization);
