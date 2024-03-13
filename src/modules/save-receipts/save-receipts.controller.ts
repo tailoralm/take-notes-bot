@@ -7,21 +7,34 @@ import * as GeneralUtils from '../../utils/general-utils';
 
 export default class SaveReceiptsController {
   constructor() {}
-  public static async saveThisPhoto(ctx: Context) {
+  public static async saveReceipt(ctx: Context) {
     console.log('Receipt command activated!');
 
     const message = ctx.message as Message.PhotoMessage;
-    const splitCaption = message.caption?.split(' ') as string[];
-    const fileName = splitCaption.length > 1 ? splitCaption[1] : '';
-    const fileUrl = await ctx.telegram.getFileLink(PhotoUtils.getFileId(message.photo));
 
+    const fileName = this.getFilenameFromCommand(message.caption);
+    const fileUrl = await ctx.telegram.getFileLink(PhotoUtils.getFileId(message.photo));
+    this.saveThisReceipt(ctx, fileName, fileUrl.toString());
+
+  }
+  public static async saveReplyedReceipt(ctx: Context) {
+    console.log('Receipt replyed command activated!');
+
+    const message = ctx.message as Message.TextMessage;
+    const messageReplyed = message.reply_to_message as Message.PhotoMessage;
+
+    const fileName = this.getFilenameFromCommand(message.text);
+    const fileUrl = await ctx.telegram.getFileLink(PhotoUtils.getFileId(messageReplyed.photo));
+
+    this.saveThisReceipt(ctx, fileName, fileUrl.toString());
+  }
+
+  private static async saveThisReceipt(ctx: Context, fileName: string, fileUrl: string ) {
     try {
-      // const response = await PhotoUtils.getPhotoData(file);
       const today = new Date();
       const filePath = `downloads/receipt/${fileName}_${today.getFullYear()}_${today.getMonth()+1}_${today.getDate()}.jpg`;
       console.log('Saving: ', filePath);
       await GeneralUtils.downloadFile(fileUrl.toString(), filePath);
-      // fs.writeFileSync(fullFileName, response.data);
 
     } catch (error) {
       console.error('Error downloading image:', error);
@@ -30,4 +43,13 @@ export default class SaveReceiptsController {
 
     return ctx.reply('Image saved successfully!');
   }
+
+  static getFilenameFromCommand(text: string | undefined) {
+    if(!text) return '';
+    const splitCaption = text.split(' ') as string[];
+    return splitCaption.length > 1 ? splitCaption[1] : '';
+  }
+
+
+
 }

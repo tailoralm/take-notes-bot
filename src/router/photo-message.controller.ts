@@ -9,9 +9,17 @@ export default class PhotoMessageController {
       if(!message.photo)
         return ctx.reply('Please attatch a photo!');
 
-      if(message.caption?.startsWith('/receipt')) SaveReceiptsController.saveThisPhoto(ctx);
+      if(message.caption?.startsWith('-r'))
+        SaveReceiptsController.saveReceipt(ctx);
+
       return;
     });
+  }
 
+  public static replyPhoto(ctx: Context){
+    const message = ctx.message as Message.TextMessage;
+
+    if(message.text?.startsWith('-r'))
+      SaveReceiptsController.saveReplyedReceipt(ctx);
   }
 }
