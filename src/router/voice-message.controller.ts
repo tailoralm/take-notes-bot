@@ -1,17 +1,22 @@
-import {Telegraf} from "telegraf";
-import * as GeneralUtils from '../utils/general-utils';
+import {Context, Telegraf} from "telegraf";
+import SaveVoiceController from "../modules/save-files/save-voice.controller";
+import {Message} from "typegram";
+import SaveReceiptsController from "../modules/save-files/save-receipts.controller";
 
 
 export default class VoiceMessageController {
   static router(bot: Telegraf) {
     bot.on('voice', async (ctx) => {
-      const voiceFileId = ctx.message.voice.file_id;
-
-      // Getting the file path from Telegram
-      const filePath = await ctx.telegram.getFileLink(voiceFileId);
-
-      GeneralUtils.downloadFile(filePath.toString(), 'downloaded_voice.ogg')
+      // Disable for now
+      // new SaveVoiceController(ctx).saveVoice();
     });
 
+  }
+
+  public static replyVoice(ctx: Context){
+    const message = ctx.message as Message.TextMessage;
+
+    if(message.text?.startsWith('-s'))
+      new SaveVoiceController(ctx).saveRepliedVoice();
   }
 }
