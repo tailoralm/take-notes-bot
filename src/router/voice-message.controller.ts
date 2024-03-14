@@ -7,8 +7,7 @@ import SavePhotoController from "../modules/save-files/save-photo.controller";
 export default class VoiceMessageController {
   static router(bot: Telegraf) {
     bot.on('voice', async (ctx) => {
-      // Disable for now
-      // new SaveVoiceController(ctx).saveVoice();
+      new SaveVoiceController(ctx).saveVoice();
     });
 
   }

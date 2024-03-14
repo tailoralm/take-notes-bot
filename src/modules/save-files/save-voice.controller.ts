@@ -12,7 +12,7 @@ export default class SaveVoiceController extends SaveFilesAbstractController {
     const message = this.ctx.message as Message.VoiceMessage;
     const voiceFileId = message.voice.file_id;
 
-    super.saveFile(voiceFileId, '');
+    super.saveFile(voiceFileId, this.getFilename('voice', voiceFileId));
   }
 
   saveRepliedVoice() {
@@ -20,15 +20,14 @@ export default class SaveVoiceController extends SaveFilesAbstractController {
     const messageReplied = message.reply_to_message as Message.VoiceMessage;
 
     const voiceFileId = messageReplied.voice.file_id;
+    const splitCaption = message.text.split(' ') as string[];
+    const fileName = splitCaption.length > 1 ? splitCaption[1] : 'voice';
 
-    const fileName = this.getFilename(message.text, voiceFileId);
-    super.saveFile(voiceFileId, fileName);
+    super.saveFile(voiceFileId, this.getFilename(fileName, voiceFileId));
   }
 
   protected getFilename(text: string, fileId: string): string {
-    return super.getFilename(text, fileId) + '.ogg';
+    return `${text}_${this.getStringDate()}_${fileId}.ogg`;
   }
-
-
 
 }

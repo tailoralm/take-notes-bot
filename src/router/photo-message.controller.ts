@@ -10,14 +10,11 @@ export default class PhotoMessageController {
       if(!message.photo)
         return ctx.reply('Please attatch a photo!');
 
-      if(message.caption?.startsWith('-s'))
-        return new SavePhotoController(ctx).savePhoto();
-
       if(message.caption?.startsWith('-r'))
         return new SavePhotoController(ctx, 'receipts').savePhoto();
 
+      return new SavePhotoController(ctx).savePhoto();
 
-      return;
     });
   }
 

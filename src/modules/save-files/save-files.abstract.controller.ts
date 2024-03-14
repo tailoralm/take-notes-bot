@@ -22,7 +22,7 @@ export default abstract class SaveFilesAbstractController {
   protected getFilename(text: string, fileId: string) {
     const splitCaption = text.split(' ') as string[];
     const fileName = splitCaption.length > 1 ? splitCaption[1] : 'undefined';
-    return `${fileName}_${this.getStringDate()}_${fileId.slice(0, 20)}`;
+    return `${fileName}_${this.getStringDate()}_${fileId}`;
   }
 
 }
