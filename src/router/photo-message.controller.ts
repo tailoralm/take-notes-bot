@@ -1,6 +1,6 @@
 import {Context, Telegraf} from "telegraf";
 import {Message} from "typegram";
-import SaveReceiptsController from "../modules/save-files/save-receipts.controller";
+import SavePhotoController from "../modules/save-files/save-photo.controller";
 
 export default class PhotoMessageController {
   static router(bot: Telegraf) {
@@ -10,8 +10,12 @@ export default class PhotoMessageController {
       if(!message.photo)
         return ctx.reply('Please attatch a photo!');
 
+      if(message.caption?.startsWith('-s'))
+        return new SavePhotoController(ctx).savePhoto();
+
       if(message.caption?.startsWith('-r'))
-        new SaveReceiptsController(ctx).saveReceipt();
+        return new SavePhotoController(ctx, 'receipts').savePhoto();
+
 
       return;
     });
@@ -20,7 +24,10 @@ export default class PhotoMessageController {
   public static replyPhoto(ctx: Context){
     const message = ctx.message as Message.TextMessage;
 
+    if(message.text?.startsWith('-s'))
+      return new SavePhotoController(ctx).saveRepliedPhoto();
+
     if(message.text?.startsWith('-r'))
-      new SaveReceiptsController(ctx).saveRepliedReceipt();
+      return new SavePhotoController(ctx, 'receipts').saveRepliedPhoto();
   }
 }

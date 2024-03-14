@@ -6,13 +6,13 @@ import * as GeneralUtils from "../../utils/general-utils";
 
 export default class SaveVoiceController extends SaveFilesAbstractController {
   constructor(ctx: Context) {
-    super(ctx);
+    super(ctx, 'voices');
   }
   saveVoice() {
     const message = this.ctx.message as Message.VoiceMessage;
     const voiceFileId = message.voice.file_id;
 
-    super.saveFile(voiceFileId, '', 'voices');
+    super.saveFile(voiceFileId, '');
   }
 
   saveRepliedVoice() {
@@ -21,13 +21,12 @@ export default class SaveVoiceController extends SaveFilesAbstractController {
 
     const voiceFileId = messageReplied.voice.file_id;
 
-    const fileName = this.getFilename(message.text);
-    super.saveFile(voiceFileId, fileName, 'voices');
+    const fileName = this.getFilename(message.text, voiceFileId);
+    super.saveFile(voiceFileId, fileName);
   }
 
-  protected getFilename(text: string): string {
-    const fileName = super.getFilename(text);
-    return `${fileName}_${this.getStringDate()}.ogg`
+  protected getFilename(text: string, fileId: string): string {
+    return super.getFilename(text, fileId) + '.ogg';
   }
 
 

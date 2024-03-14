@@ -2,7 +2,7 @@ import {Context, Telegraf} from "telegraf";
 import {Message} from "typegram";
 import PhotoMessageController from "./photo-message.controller";
 import VoiceMessageController from "./voice-message.controller";
-import SaveReceiptsController from "../modules/save-files/save-receipts.controller";
+import SavePhotoController from "../modules/save-files/save-photo.controller";
 
 export default class TextMessageController {
   static router(bot: Telegraf) {

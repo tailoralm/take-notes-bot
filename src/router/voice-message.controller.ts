@@ -1,7 +1,7 @@
 import {Context, Telegraf} from "telegraf";
 import SaveVoiceController from "../modules/save-files/save-voice.controller";
 import {Message} from "typegram";
-import SaveReceiptsController from "../modules/save-files/save-receipts.controller";
+import SavePhotoController from "../modules/save-files/save-photo.controller";
 
 
 export default class VoiceMessageController {
