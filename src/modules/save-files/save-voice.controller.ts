@@ -1,8 +1,6 @@
-import {Context} from "telegraf";
-import { Message } from 'typegram';
-import * as PhotoUtils from '../../utils/photo-utils';
-import SaveFilesAbstractController from "./save-files.abstract.controller";
-import * as GeneralUtils from "../../utils/general-utils";
+import {Context} from 'telegraf';
+import {Message} from 'typegram';
+import SaveFilesAbstractController from './save-files.abstract.controller';
 
 export default class SaveVoiceController extends SaveFilesAbstractController {
   constructor(ctx: Context) {
@@ -16,7 +14,7 @@ export default class SaveVoiceController extends SaveFilesAbstractController {
   }
 
   saveRepliedVoice() {
-    const message =  this.ctx.message as Message.TextMessage;
+    const message = this.ctx.message as Message.TextMessage;
     const messageReplied = message.reply_to_message as Message.VoiceMessage;
 
     const voiceFileId = messageReplied.voice.file_id;
@@ -29,5 +27,4 @@ export default class SaveVoiceController extends SaveFilesAbstractController {
   protected getFilename(text: string, fileId: string): string {
     return `${text}_${this.getStringDate()}_${fileId}.ogg`;
   }
-
 }

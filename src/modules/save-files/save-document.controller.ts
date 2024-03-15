@@ -1,7 +1,6 @@
-import {Context} from "telegraf";
-import { Message } from 'typegram';
-import * as PhotoUtils from '../../utils/photo-utils';
-import SaveFilesAbstractController from "./save-files.abstract.controller";
+import {Context} from 'telegraf';
+import {Message} from 'typegram';
+import SaveFilesAbstractController from './save-files.abstract.controller';
 
 export default class SaveDocumentController extends SaveFilesAbstractController {
   constructor(ctx: Context, folder = 'document') {
@@ -14,13 +13,16 @@ export default class SaveDocumentController extends SaveFilesAbstractController 
   }
 
   saveRepliedDoc() {
-    const message =  this.ctx.message as Message.TextMessage;
+    const message = this.ctx.message as Message.TextMessage;
     const messageReplied = message.reply_to_message as Message.DocumentMessage;
 
     const splitCaption = message.text.split(' ') as string[];
     const fileName = splitCaption.length > 1 ? splitCaption[1] : 'doc';
 
-    super.saveFile(messageReplied.document.file_id, this.getFilename(fileName, messageReplied.document.file_name!));
+    super.saveFile(
+      messageReplied.document.file_id,
+      this.getFilename(fileName, messageReplied.document.file_name!)
+    );
   }
 
   protected getFilename(text: string, fileName: string): string {

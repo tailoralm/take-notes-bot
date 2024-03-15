@@ -15,11 +15,6 @@ VoiceMessageController.router(bot);
 DocumentMessageController.router(bot);
 TextMessageController.router(bot);
 
-bot.command('start', (ctx: Context) => {
-  const first_name = ctx.from?.first_name;
-  ctx.reply(`Hello, ${first_name}! Welcome to the bot.`);
-})
-
 bot.launch();
 
 function checkAuthorization(ctx: Context, next: () => any) {
