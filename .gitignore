@@ -1,4 +1,5 @@
 downloads/
+package-lock.json
 
 # Logs
 logs
