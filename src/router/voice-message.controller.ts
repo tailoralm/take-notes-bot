@@ -2,6 +2,7 @@ import {Context, Telegraf} from "telegraf";
 import SaveVoiceController from "../modules/save-files/save-voice.controller";
 import {Message} from "typegram";
 import SavePhotoController from "../modules/save-files/save-photo.controller";
+import * as CommandsUtils from "../utils/commands-utils";
 
 
 export default class VoiceMessageController {
@@ -14,8 +15,9 @@ export default class VoiceMessageController {
 
   public static replyVoice(ctx: Context){
     const message = ctx.message as Message.TextMessage;
+    const commands = CommandsUtils.parseCommands(message.text);
 
-    if(message.text?.startsWith('-s'))
+    if(commands.save)
       new SaveVoiceController(ctx).saveRepliedVoice();
   }
 }
