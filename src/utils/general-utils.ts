@@ -1,5 +1,5 @@
-import axios from "axios";
-import fs from "fs";
+import axios from 'axios';
+import fs from 'fs';
 import * as path from 'path';
 
 export async function downloadFile(fileUrl: string, path: any) {
@@ -23,7 +23,7 @@ export function ensureDirectoryExistence(filePath: string) {
   if (fs.existsSync(dirname)) return;
 
   ensureDirectoryExistence(dirname);
-  fs.mkdirSync(dirname, { recursive: true });
+  fs.mkdirSync(dirname, {recursive: true});
 }
 
 export function formatFullDateTime(date: Date): string {
