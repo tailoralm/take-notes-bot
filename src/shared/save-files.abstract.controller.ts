@@ -1,12 +1,12 @@
 import {Context} from 'telegraf';
-import * as GeneralUtils from '../../utils/general-utils';
+import * as GeneralUtils from '../utils/general-utils';
 
 export default abstract class SaveFilesAbstractController {
   protected constructor(
     protected ctx: Context,
     private folder = 'files'
   ) {}
-  async saveFile(fileId: string, fileName: string) {
+  async donwloadAndSaveFile(fileId: string, fileName: string) {
     const fileUrl = await this.ctx.telegram.getFileLink(fileId);
     const filePath = `downloads/${this.folder}/${fileName}`;
     console.log('Saving: ', filePath);

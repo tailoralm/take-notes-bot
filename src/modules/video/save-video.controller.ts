@@ -1,8 +1,7 @@
-import {Context} from "telegraf";
-import { Message } from 'typegram';
-import * as PhotoUtils from '../../utils/photo-utils';
-import SaveFilesAbstractController from "./save-files.abstract.controller";
-import {EFolders} from "../../shared/folders.enum";
+import {Context} from 'telegraf';
+import {Message} from 'typegram';
+import SaveFilesAbstractController from '../../shared/save-files.abstract.controller';
+import {EFolders} from '../../shared/folders.enum';
 
 export default class SaveVideoController extends SaveFilesAbstractController {
   constructor(ctx: Context, folder = EFolders.videos) {
@@ -12,12 +11,16 @@ export default class SaveVideoController extends SaveFilesAbstractController {
     const message = this.ctx.message as Message.VideoMessage;
     const fileId = message.video.file_id;
 
-    const fileName = this.getFilename(message.caption || message.video.file_name || 'video', fileId);
+    const fileName = this.getFilename(
+      message.caption || message.video.file_name || 'video',
+      fileId
+    );
     super.donwloadAndSaveFile(fileId, fileName);
   }
 
   saveRepliedVideo() {
-    const message =  this.ctx.message as Message.TextMessage;
+    const message = this.ctx.message as Message.TextMessage;
+
     const messageReplied = message.reply_to_message as Message.VideoMessage;
     const fileId = messageReplied.video.file_id;
 
@@ -28,8 +31,6 @@ export default class SaveVideoController extends SaveFilesAbstractController {
   }
 
   protected getFilename(text: string, fileId: string): string {
-    return `${text}_${this.getStringDate()}_${fileId.slice(0,10)}.mp4`;
+    return `${text}_${this.getStringDate()}_${fileId.slice(0, 10)}.mp4`;
   }
-
-
 }

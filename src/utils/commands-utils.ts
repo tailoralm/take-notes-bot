@@ -1,5 +1,3 @@
-import {EFolders} from "../shared/folders.enum";
-
 interface CommandOptions {
   save: boolean;
   receipt: boolean;
