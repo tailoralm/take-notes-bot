@@ -5,12 +5,14 @@ import VoiceMessageController from "./router/voice-message.controller";
 import TextMessageController from "./router/text-message.controller";
 import CommandMessageController from "./router/command-message.controller";
 import DocumentMessageController from "./router/document-message.controller";
+import VideoMessageController from "./router/video-message.controller";
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN!);
 bot.use(checkAuthorization);
 
 CommandMessageController.router(bot);
 PhotoMessageController.router(bot);
+VideoMessageController.router(bot);
 VoiceMessageController.router(bot);
 DocumentMessageController.router(bot);
 TextMessageController.router(bot);
