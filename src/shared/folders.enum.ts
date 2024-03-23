@@ -1,4 +1,4 @@
-const DEFAULT_PATH = 'documents/';
+const DEFAULT_PATH = 'DATA_DIR/bot-documents/';
 
 export enum EFolders {
   docs = DEFAULT_PATH + 'docs',
