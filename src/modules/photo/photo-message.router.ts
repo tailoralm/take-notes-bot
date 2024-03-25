@@ -29,5 +29,8 @@ export default class PhotoMessageRouter {
 
     if (commands.receipt)
       return new SavePhotoController(ctx, EFolders.receipts).saveRepliedPhoto();
+
+    if (commands.random)
+      return new SavePhotoController(ctx, EFolders.random).saveRepliedPhoto();
   }
 }

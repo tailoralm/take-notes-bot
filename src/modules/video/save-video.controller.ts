@@ -12,8 +12,8 @@ export default class SaveVideoController extends SaveFilesAbstractController {
     const fileId = message.video.file_id;
 
     const fileName = this.getFilename(
-      message.caption || message.video.file_name || 'video',
-      fileId
+      message.caption || 'video',
+      message.video.file_name || ''
     );
     super.donwloadAndSaveFile(fileId, fileName);
   }
@@ -27,10 +27,11 @@ export default class SaveVideoController extends SaveFilesAbstractController {
     const splitCaption = message.text.split(' ') as string[];
     const fileName = splitCaption.length > 1 ? splitCaption[1] : 'video';
 
-    super.donwloadAndSaveFile(fileId, this.getFilename(fileName, fileId));
+    super.donwloadAndSaveFile(fileId, this.getFilename(fileName, ''));
   }
 
-  protected getFilename(text: string, fileId: string): string {
-    return `${text}_${this.getStringDate()}_${fileId.slice(0, 10)}.mp4`;
+  protected getFilename(text: string, fileName: string): string {
+    if (fileName) fileName = fileName + '_';
+    return `${text}_${fileName}${this.getStringDate()}.mp4`;
   }
 }

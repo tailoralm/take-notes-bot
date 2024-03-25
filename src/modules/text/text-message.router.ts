@@ -2,7 +2,7 @@ import {Context, Telegraf} from 'telegraf';
 import {Message} from 'typegram';
 import PhotoMessageRouter from '../photo/photo-message.router';
 import VoiceMessageRouter from '../voice/voice-message.router';
-import DocumentMessageController from '../document/document-message.controller';
+import DocumentMessageRouter from '../document/document-message.router';
 import VideoMessageRouter from '../video/video-message.router';
 import SaveTextController from './save-text.controller';
 
@@ -19,7 +19,7 @@ export default class TextMessageRouter {
         if ((<Message.VoiceMessage>message.reply_to_message).voice)
           VoiceMessageRouter.replyVoice(ctx);
         if ((<Message.DocumentMessage>message.reply_to_message).document)
-          DocumentMessageController.replyDoc(ctx);
+          DocumentMessageRouter.replyDoc(ctx);
       }
 
       if (message.text) {

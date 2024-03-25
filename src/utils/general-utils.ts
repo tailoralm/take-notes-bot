@@ -2,20 +2,35 @@ import axios from 'axios';
 import fs from 'fs';
 import * as path from 'path';
 
-export async function downloadFile(fileUrl: string, path: any) {
+export async function downloadFile(fileUrl: string, path: string) {
   const response = await axios({
     method: 'GET',
     url: fileUrl,
     responseType: 'stream',
   });
 
-  ensureDirectoryExistence(path);
-  response.data.pipe(fs.createWriteStream(path));
+  const uniquePath = generateUniqueFilename(path);
+
+  response.data.pipe(fs.createWriteStream(uniquePath));
 
   return new Promise((resolve, reject) => {
     response.data.on('end', () => resolve(path));
     response.data.on('error', reject);
   });
+}
+
+function generateUniqueFilename(filename: string): string {
+  const baseName = path.basename(filename, path.extname(filename));
+  const extension = path.extname(filename);
+  const dirname = path.dirname(filename);
+  let uniqueFilename = filename;
+  let counter = 1;
+
+  while (fs.existsSync(uniqueFilename)) {
+    uniqueFilename = `${dirname}/${baseName} (${counter})${extension}`;
+    counter++;
+  }
+  return uniqueFilename;
 }
 
 export function ensureDirectoryExistence(filePath: string) {

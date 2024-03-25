@@ -12,7 +12,7 @@ export default class SavePhotoController extends SaveFilesAbstractController {
     const message = this.ctx.message as Message.PhotoMessage;
     const fileId = PhotoUtils.getFileId(message.photo);
 
-    const fileName = this.getFilename(message.caption || 'photo', fileId);
+    const fileName = this.getFilename(message.caption || 'photo');
     super.donwloadAndSaveFile(fileId, fileName);
   }
 
@@ -22,10 +22,10 @@ export default class SavePhotoController extends SaveFilesAbstractController {
     const fileId = PhotoUtils.getFileId(messageReplied.photo);
     const splitCaption = message.text.split(' ') as string[];
     const fileName = splitCaption.length > 1 ? splitCaption[1] : 'photo';
-    super.donwloadAndSaveFile(fileId, this.getFilename(fileName, fileId));
+    super.donwloadAndSaveFile(fileId, this.getFilename(fileName));
   }
 
-  protected getFilename(text: string, fileId: string): string {
-    return `${text}_${this.getStringDate()}_${fileId.slice(0, 10)}.jpg`;
+  protected getFilename(text: string): string {
+    return `${text}_${this.getStringDate()}.jpg`;
   }
 }

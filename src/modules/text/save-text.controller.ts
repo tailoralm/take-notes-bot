@@ -13,7 +13,6 @@ export default class SaveVoiceController {
     const logEntry = `${dateTime}: ${message.text}\n`;
 
     const nameFile = `${EFolders.notes}/${this.getStringYearMonth()}.log`;
-    GeneralUtils.ensureDirectoryExistence(nameFile);
 
     fs.appendFile(nameFile, logEntry, err => {
       if (err) {

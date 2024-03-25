@@ -4,7 +4,7 @@ import SaveDocumentController from './save-document.controller';
 import {EFolders} from '../../shared/folders.enum';
 import * as CommandsUtils from '../../utils/commands-utils';
 
-export default class DocumentMessageController {
+export default class DocumentMessageRouter {
   static router(bot: Telegraf) {
     bot.on('document', (ctx: Context) => {
       const message = ctx.message as Message.DocumentMessage;

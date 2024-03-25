@@ -27,6 +27,6 @@ export default class SaveDocumentController extends SaveFilesAbstractController 
   }
 
   protected getFilename(text: string, fileName: string): string {
-    return `${text}_${this.getStringDate()}_${fileName}`;
+    return `${text}_${fileName}_${this.getStringDate()}`;
   }
 }

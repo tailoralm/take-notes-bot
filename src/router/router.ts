@@ -2,7 +2,7 @@ import {Context, Telegraf} from 'telegraf';
 import PhotoMessageRouter from '../modules/photo/photo-message.router';
 import VideoMessageRouter from '../modules/video/video-message.router';
 import VoiceMessageRouter from '../modules/voice/voice-message.router';
-import DocumentMessageController from '../modules/document/document-message.controller';
+import DocumentMessageRouter from '../modules/document/document-message.router';
 import TextMessageRouter from '../modules/text/text-message.router';
 
 export default class Router {
@@ -10,7 +10,7 @@ export default class Router {
     PhotoMessageRouter.router(bot);
     VideoMessageRouter.router(bot);
     VoiceMessageRouter.router(bot);
-    DocumentMessageController.router(bot);
+    DocumentMessageRouter.router(bot);
     TextMessageRouter.router(bot);
 
     this.commands(bot);

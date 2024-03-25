@@ -24,6 +24,9 @@ export default class VideoMessageRouter {
 
     if (commands.save) return new SaveVideoController(ctx).saveRepliedVideo();
 
+    if (commands.random)
+      return new SaveVideoController(ctx, EFolders.random).saveRepliedVideo();
+
     return;
   }
 }
