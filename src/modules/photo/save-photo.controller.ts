@@ -1,10 +1,11 @@
 import {Context} from 'telegraf';
 import {Message} from 'typegram';
 import * as PhotoUtils from '../../utils/photo-utils';
-import SaveFilesAbstractController from './save-files.abstract.controller';
+import SaveFilesAbstractController from '../../shared/save-files.abstract.controller';
+import {EFolders} from '../../shared/folders.enum';
 
 export default class SavePhotoController extends SaveFilesAbstractController {
-  constructor(ctx: Context, folder = 'photos') {
+  constructor(ctx: Context, folder = EFolders.photos) {
     super(ctx, folder);
   }
   savePhoto() {
@@ -12,7 +13,7 @@ export default class SavePhotoController extends SaveFilesAbstractController {
     const fileId = PhotoUtils.getFileId(message.photo);
 
     const fileName = this.getFilename(message.caption || 'photo', fileId);
-    super.saveFile(fileId, fileName);
+    super.donwloadAndSaveFile(fileId, fileName);
   }
 
   saveRepliedPhoto() {
@@ -21,7 +22,7 @@ export default class SavePhotoController extends SaveFilesAbstractController {
     const fileId = PhotoUtils.getFileId(messageReplied.photo);
     const splitCaption = message.text.split(' ') as string[];
     const fileName = splitCaption.length > 1 ? splitCaption[1] : 'photo';
-    super.saveFile(fileId, this.getFilename(fileName, fileId));
+    super.donwloadAndSaveFile(fileId, this.getFilename(fileName, fileId));
   }
 
   protected getFilename(text: string, fileId: string): string {

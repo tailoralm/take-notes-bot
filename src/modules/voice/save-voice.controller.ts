@@ -1,16 +1,20 @@
 import {Context} from 'telegraf';
 import {Message} from 'typegram';
-import SaveFilesAbstractController from './save-files.abstract.controller';
+import SaveFilesAbstractController from '../../shared/save-files.abstract.controller';
+import {EFolders} from '../../shared/folders.enum';
 
 export default class SaveVoiceController extends SaveFilesAbstractController {
   constructor(ctx: Context) {
-    super(ctx, 'voices');
+    super(ctx, EFolders.voices);
   }
   saveVoice() {
     const message = this.ctx.message as Message.VoiceMessage;
     const voiceFileId = message.voice.file_id;
 
-    super.saveFile(voiceFileId, this.getFilename('voice', voiceFileId));
+    super.donwloadAndSaveFile(
+      voiceFileId,
+      this.getFilename('voice', voiceFileId)
+    );
   }
 
   saveRepliedVoice() {
@@ -21,7 +25,10 @@ export default class SaveVoiceController extends SaveFilesAbstractController {
     const splitCaption = message.text.split(' ') as string[];
     const fileName = splitCaption.length > 1 ? splitCaption[1] : 'voice';
 
-    super.saveFile(voiceFileId, this.getFilename(fileName, voiceFileId));
+    super.donwloadAndSaveFile(
+      voiceFileId,
+      this.getFilename(fileName, voiceFileId)
+    );
   }
 
   protected getFilename(text: string, fileId: string): string {
