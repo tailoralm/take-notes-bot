@@ -5,12 +5,14 @@ interface CommandOptions {
   name?: string;
 }
 
-export function parseCommands(input: string): CommandOptions {
+export function parseCommands(input: string | undefined): CommandOptions {
   const options: CommandOptions = {
     save: false,
     receipt: false,
     random: false,
   };
+
+  if (!input) return options;
 
   const parts = input.split(' ');
 

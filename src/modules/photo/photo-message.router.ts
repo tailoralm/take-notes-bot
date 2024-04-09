@@ -9,15 +9,14 @@ export default class PhotoMessageRouter {
     bot.on('photo', (ctx: Context) => {
       const message = ctx.message as Message.PhotoMessage;
 
-      if (!message.caption) return new SavePhotoController(ctx).savePhoto();
-
       const commands = CommandsUtils.parseCommands(message.caption);
-
       if (commands.receipt)
         return new SavePhotoController(ctx, EFolders.receipts).savePhoto();
 
       if (commands.random)
         return new SavePhotoController(ctx, EFolders.random).savePhoto();
+
+      return new SavePhotoController(ctx).savePhoto();
     });
   }
 

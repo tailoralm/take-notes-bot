@@ -9,12 +9,12 @@ export default class VideoMessageRouter {
     bot.on('video', (ctx: Context) => {
       const message = ctx.message as Message.PhotoMessage;
 
-      if (!message.caption) return new SaveVideoController(ctx).saveVideo();
-
       const commands = CommandsUtils.parseCommands(message.caption);
 
       if (commands.random)
         return new SaveVideoController(ctx, EFolders.random).saveVideo();
+
+      return new SaveVideoController(ctx).saveVideo();
     });
   }
 

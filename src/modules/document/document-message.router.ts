@@ -9,12 +9,11 @@ export default class DocumentMessageRouter {
     bot.on('document', (ctx: Context) => {
       const message = ctx.message as Message.DocumentMessage;
 
-      if (!message.caption) return new SaveDocumentController(ctx).saveDoc();
-
       const commands = CommandsUtils.parseCommands(message.caption);
-
       if (commands.receipt)
         return new SaveDocumentController(ctx, EFolders.receipts).saveDoc();
+
+      return new SaveDocumentController(ctx).saveDoc();
     });
   }
 
