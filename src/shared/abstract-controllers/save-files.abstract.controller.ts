@@ -1,6 +1,6 @@
 import {Context} from 'telegraf';
-import * as GeneralUtils from '../utils/general-utils';
-import {EFolders} from './folders.enum';
+import * as GeneralUtils from '../../utils/general-utils';
+import {EFolders} from '../enums/folders.enum';
 
 export default abstract class SaveFilesAbstractController {
   protected constructor(
@@ -13,7 +13,7 @@ export default abstract class SaveFilesAbstractController {
     console.log('Saving: ', filePath);
 
     await GeneralUtils.downloadFile(fileUrl.toString(), filePath);
-    await this.ctx.reply(`File saved successfully! \nPath: ${filePath}`);
+    await this.ctx.reply('Saved!');
   }
 
   protected getStringDate() {
