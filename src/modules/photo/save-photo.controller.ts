@@ -1,8 +1,8 @@
 import {Context} from 'telegraf';
 import {Message} from 'typegram';
 import * as PhotoUtils from '../../utils/photo-utils';
-import SaveFilesAbstractController from '../../shared/save-files.abstract.controller';
-import {EFolders} from '../../shared/folders.enum';
+import SaveFilesAbstractController from '../../shared/abstract-controllers/save-files.abstract.controller';
+import {EFolders} from '../../shared/enums/folders.enum';
 
 export default class SavePhotoController extends SaveFilesAbstractController {
   constructor(ctx: Context, folder = EFolders.photos) {

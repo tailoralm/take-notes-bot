@@ -2,9 +2,9 @@ import {Context, Telegraf} from 'telegraf';
 import {Message} from 'typegram';
 import SaveVideoController from './save-video.controller';
 import * as CommandsUtils from '../../utils/commands-utils';
-import {EFolders} from '../../shared/folders.enum';
+import {EFolders} from '../../shared/enums/folders.enum';
 
-export default class VideoMessageRouter {
+export default class VideoRouter {
   static router(bot: Telegraf) {
     bot.on('video', (ctx: Context) => {
       const message = ctx.message as Message.PhotoMessage;

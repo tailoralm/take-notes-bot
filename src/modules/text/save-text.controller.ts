@@ -1,6 +1,6 @@
 import {Context} from 'telegraf';
 import {Message} from 'typegram';
-import {EFolders} from '../../shared/folders.enum';
+import {EFolders} from '../../shared/enums/folders.enum';
 import * as fs from 'fs';
 import * as GeneralUtils from '../../utils/general-utils';
 

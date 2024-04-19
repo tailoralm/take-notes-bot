@@ -3,7 +3,7 @@ import SaveVoiceController from './save-voice.controller';
 import {Message} from 'typegram';
 import * as CommandsUtils from '../../utils/commands-utils';
 
-export default class VoiceMessageRouter {
+export default class VoiceRouter {
   static router(bot: Telegraf) {
     bot.on('voice', async ctx => {
       new SaveVoiceController(ctx).saveVoice();

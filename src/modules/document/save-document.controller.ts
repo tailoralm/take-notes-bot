@@ -1,7 +1,7 @@
 import {Context} from 'telegraf';
 import {Message} from 'typegram';
-import SaveFilesAbstractController from '../../shared/save-files.abstract.controller';
-import {EFolders} from '../../shared/folders.enum';
+import SaveFilesAbstractController from '../../shared/abstract-controllers/save-files.abstract.controller';
+import {EFolders} from '../../shared/enums/folders.enum';
 
 export default class SaveDocumentController extends SaveFilesAbstractController {
   constructor(ctx: Context, folder = EFolders.docs) {

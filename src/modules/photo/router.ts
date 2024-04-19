@@ -1,10 +1,10 @@
 import {Context, Telegraf} from 'telegraf';
 import {Message} from 'typegram';
 import SavePhotoController from './save-photo.controller';
-import {EFolders} from '../../shared/folders.enum';
+import {EFolders} from '../../shared/enums/folders.enum';
 import * as CommandsUtils from '../../utils/commands-utils';
 
-export default class PhotoMessageRouter {
+export default class PhotoRouter {
   static router(bot: Telegraf) {
     bot.on('photo', (ctx: Context) => {
       const message = ctx.message as Message.PhotoMessage;

@@ -1,17 +1,17 @@
 import {Context, Telegraf} from 'telegraf';
-import PhotoMessageRouter from '../modules/photo/photo-message.router';
-import VideoMessageRouter from '../modules/video/video-message.router';
-import VoiceMessageRouter from '../modules/voice/voice-message.router';
-import DocumentMessageRouter from '../modules/document/document-message.router';
-import TextMessageRouter from '../modules/text/text-message.router';
+import PhotoRouter from '../modules/photo/router';
+import DocumentRouter from '../modules/document/router';
+import TextRouter from '../modules/text/router';
+import VideoRouter from '../modules/video/router';
+import VoiceRouter from '../modules/voice/router';
 
 export default class Router {
   static init(bot: Telegraf) {
-    PhotoMessageRouter.router(bot);
-    VideoMessageRouter.router(bot);
-    VoiceMessageRouter.router(bot);
-    DocumentMessageRouter.router(bot);
-    TextMessageRouter.router(bot);
+    DocumentRouter.router(bot);
+    PhotoRouter.router(bot);
+    TextRouter.router(bot);
+    VideoRouter.router(bot);
+    VoiceRouter.router(bot);
 
     this.commands(bot);
   }

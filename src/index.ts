@@ -2,7 +2,7 @@ import 'dotenv/config';
 import {Telegraf, Context} from 'telegraf';
 import Router from './router/router';
 import {ensureDirectoryExistence} from './utils/general-utils';
-import {EFolders} from './shared/folders.enum';
+import {EFolders} from './shared/enums/folders.enum';
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN!);
 bot.use(checkAuthorization);

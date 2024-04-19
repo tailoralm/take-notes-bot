@@ -1,10 +1,10 @@
 import {Context, Telegraf} from 'telegraf';
 import {Message} from 'typegram';
 import SaveDocumentController from './save-document.controller';
-import {EFolders} from '../../shared/folders.enum';
+import {EFolders} from '../../shared/enums/folders.enum';
 import * as CommandsUtils from '../../utils/commands-utils';
 
-export default class DocumentMessageRouter {
+export default class DocumentRouter {
   static router(bot: Telegraf) {
     bot.on('document', (ctx: Context) => {
       const message = ctx.message as Message.DocumentMessage;
