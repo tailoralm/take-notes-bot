@@ -1,46 +1,67 @@
-import {ListObjectsCommand, S3Client} from '@aws-sdk/client-s3';
-import {VoiceToTextService} from '../../../shared/services/ai-services/voice-to-text.service';
+import {
+  CopyObjectCommand,
+  DeleteObjectCommand,
+  ListObjectsCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
+import {VoiceToTextService} from '@shared/services/ai-services/voice-to-text.service';
+import {AWS_VOICES, AWS} from '@shared/config.vars';
 
 export default class VoiceToTextRoutine {
   private s3Client: S3Client;
-  private region: string;
   private voiceToTextService: VoiceToTextService;
 
-  constructor(region: string) {
-    this.region = region;
-    this.s3Client = new S3Client({region});
+  constructor() {
+    this.s3Client = new S3Client({region: AWS.region});
     this.voiceToTextService = new VoiceToTextService(
-      region,
-      process.env.AWS_ACCESS_KEY!,
-      process.env.AWS_SECRET_KEY!
+      AWS.region,
+      AWS.accessKeyId,
+      AWS.secretAccessKey!
     );
   }
 
   run() {
-    // process
-    // find some way to register the file was processed
+    try {
+      this.listAndTranscribeFiles();
+    } catch (error) {
+      console.error('Error processing files: ', error);
+    }
   }
 
-  async listAndTranscribeFiles(inputBucket: string): Promise<void> {
-    try {
-      const listParams = {Bucket: inputBucket};
-      const listResponse = await this.s3Client.send(
-        new ListObjectsCommand(listParams)
-      );
+  private async listAndTranscribeFiles(): Promise<void> {
+    const listParams = {Bucket: AWS_VOICES.defaultBucket};
+    const listResponse = await this.s3Client.send(
+      new ListObjectsCommand(listParams)
+    );
 
-      if (listResponse.Contents) {
-        for (const file of listResponse.Contents) {
-          if (file.Key) {
-            await this.voiceToTextService.startTranscriptionJob(
-              file.Key,
-              'pt-BR',
-              file.Key
-            );
-          }
+    if (
+      listResponse.$metadata.httpStatusCode === 200 &&
+      listResponse.Contents
+    ) {
+      for (const file of listResponse.Contents) {
+        if (file.Key) {
+          await this.voiceToTextService
+            .startTranscriptionJob(file.Key, 'pt-BR', file.Key)
+            .then(() => this.moveFileToProcessedBucket(file.Key!));
         }
       }
-    } catch (error) {
-      console.error('Error listing or transcribing files:', error);
     }
+  }
+
+  private async moveFileToProcessedBucket(fileKey: string): Promise<void> {
+    // Copy the file to the new bucket
+    const copyParams = {
+      Bucket: AWS_VOICES.processedBucket,
+      CopySource: `${AWS_VOICES.defaultBucket}/${fileKey}`,
+      Key: fileKey,
+    };
+    await this.s3Client.send(new CopyObjectCommand(copyParams));
+
+    // Delete the file from the original bucket
+    const deleteParams = {
+      Bucket: AWS_VOICES.defaultBucket,
+      Key: fileKey,
+    };
+    await this.s3Client.send(new DeleteObjectCommand(deleteParams));
   }
 }

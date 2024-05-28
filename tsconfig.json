@@ -7,6 +7,10 @@
     "allowJs": true,
     "esModuleInterop": true,
     "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["src/shared/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
