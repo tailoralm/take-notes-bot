@@ -35,7 +35,6 @@ export default class VoiceProcessorService {
 
       const data = await this.s3Client.send(new PutObjectCommand(uploadParams));
       this.logger.logInfo('Upload Success', data);
-      this.moveVoiceFileToProcessedFolder(filePath);
     } catch (error: any) {
       this.logger.logError('Error uploading file', error);
     }
@@ -101,7 +100,7 @@ export default class VoiceProcessorService {
     await this.s3Client.send(new DeleteObjectCommand(deleteParams));
   }
 
-  private moveVoiceFileToProcessedFolder(filePath: string) {
+  moveVoiceFileToProcessedFolder(filePath: string) {
     try {
       const processedFolderPath = path.join(
         path.dirname(filePath),
