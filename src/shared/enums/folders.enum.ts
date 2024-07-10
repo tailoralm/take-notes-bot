@@ -8,5 +8,6 @@ export const EFolders = {
   random: DEFAULT_PATH + 'random',
   notes: DEFAULT_PATH + 'notes',
   voices: DEFAULT_PATH + 'notes/voices',
+  processedVoices: DEFAULT_PATH + 'notes/voices/processed',
   general: DEFAULT_PATH + 'files',
 };

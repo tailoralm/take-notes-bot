@@ -1,12 +1,14 @@
+import * as GeneralUtils from './general-utils';
+
 export default class LoggerUtils {
   constructor(private tag: string) {}
   logError(message: string, error: Error) {
-    const date = new Date().toISOString();
-    console.error(`[${date}] ${this.tag} - ${message}: ${error.message}`);
+    const date = GeneralUtils.formatFullDateTime(new Date());
+    console.error(`[${date}] ${this.tag}:`, message, error.message);
   }
 
   logInfo(message: any, ...optionalParams: any[]) {
-    const date = new Date().toISOString();
-    console.log(`[${date}] ${this.tag}: ${message}`, ...optionalParams);
+    const date = GeneralUtils.formatFullDateTime(new Date());
+    console.log(`[${date}] ${this.tag}:`, message, ...optionalParams);
   }
 }

@@ -8,6 +8,9 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "baseUrl": ".",
+    "lib": [
+      "ES2021.String"
+    ],
     "paths": {
       "@shared/*": ["src/shared/*"],
       "@utils/*": ["src/utils/*"]

@@ -1,6 +1,6 @@
-import {Context, Telegraf} from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 import VoiceController from './voice.controller';
-import {Message} from 'typegram';
+import { Message } from 'typegram';
 import * as CommandsUtils from '../../../utils/commands-utils';
 
 export default class VoiceRouter {

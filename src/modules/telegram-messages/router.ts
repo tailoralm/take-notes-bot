@@ -1,4 +1,4 @@
-import {Context, Telegraf} from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 import PhotoRouter from './photo/router';
 import DocumentRouter from './document/router';
 import TextRouter from './text/router';
@@ -12,9 +12,9 @@ export default class Router {
 
     DocumentRouter.router(bot);
     PhotoRouter.router(bot);
-    TextRouter.router(bot);
     VideoRouter.router(bot);
     VoiceRouter.router(bot);
+    TextRouter.router(bot); // 'Message' should be the last one to initialize
 
     this.commands(bot);
     bot.launch();

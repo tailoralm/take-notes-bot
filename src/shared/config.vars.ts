@@ -4,10 +4,9 @@ export const AWS = {
   secretAccessKey: process.env.AWS_SECRET_KEY!,
 };
 
-export const AWS_VOICES = {
-  defaultBucket: 'voices-to-transcribe',
-  processedBucket: 'transcribed-voices',
-  transcribedFiles: 'transcribed-voices/text-files',
+export const AWS_VOICES_S3 = {
+  voicesToTranscribe: 'voices-to-transcribe',
+  transcribedTextVoices: 'transcribed-voices',
 };
 
 // TYPES

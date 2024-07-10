@@ -5,43 +5,32 @@ import {
   StartTranscriptionJobCommand,
   TranscribeClient,
 } from '@aws-sdk/client-transcribe';
-import {S3Client} from '@aws-sdk/client-s3';
+import { S3Client } from '@aws-sdk/client-s3';
+import AwsServicesFactory from '../../aws-services.factory';
+import { AWS_VOICES_S3 } from '../../config.vars';
 
 export class TranscriptionService {
   private transcribeClient: TranscribeClient;
   private s3Client: S3Client;
-  private region: string;
-  private outputBucket: string;
 
-  constructor(region: string, accessKeyId: string, secretAccessKey: string) {
-    // Create a new TranscribeService object
-    this.transcribeClient = new TranscribeClient({
-      region,
-      credentials: {
-        accessKeyId,
-        secretAccessKey,
-      },
-    });
-
-    // Set up S3 client
-    this.s3Client = new S3Client({region});
-    this.region = region;
-    this.outputBucket = 'voices-processed';
+  constructor() {
+    this.transcribeClient = AwsServicesFactory.TranscribeClient();
+    this.s3Client = AwsServicesFactory.S3Client();
   }
 
   async startTranscriptionJob(
     jobName: string,
     languageCode: LanguageCode,
     mediaFileUri: string,
-    mediaFormat: MediaFormat = 'mp3'
+    mediaFormat: MediaFormat = 'ogg'
   ): Promise<void> {
     // Start the transcription job
     const params = {
       TranscriptionJobName: jobName,
       LanguageCode: languageCode,
-      Media: {MediaFileUri: mediaFileUri},
+      Media: { MediaFileUri: mediaFileUri },
       MediaFormat: mediaFormat,
-      OutputBucketName: this.outputBucket,
+      OutputBucketName: AWS_VOICES_S3.transcribedTextVoices,
     };
 
     await this.transcribeClient.send(new StartTranscriptionJobCommand(params));
@@ -49,8 +38,8 @@ export class TranscriptionService {
 
   async getTranscriptionJobStatus(jobName: string): Promise<string> {
     // Get transcription job status
-    const params = {TranscriptionJobName: jobName};
-    const {TranscriptionJob} = await this.transcribeClient.send(
+    const params = { TranscriptionJobName: jobName };
+    const { TranscriptionJob } = await this.transcribeClient.send(
       new GetTranscriptionJobCommand(params)
     );
     return TranscriptionJob!.TranscriptionJobStatus!;

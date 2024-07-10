@@ -1,5 +1,5 @@
-import {Context, Telegraf} from 'telegraf';
-import {Message} from 'typegram';
+import { Context, Telegraf } from 'telegraf';
+import { Message } from 'typegram';
 import PhotoRouter from '../photo/router';
 import VoiceRouter from '../voice/router';
 import DocumentRouter from '../document/router';
