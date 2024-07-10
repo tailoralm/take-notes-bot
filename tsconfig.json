@@ -9,7 +9,8 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": [

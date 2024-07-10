@@ -7,16 +7,13 @@ import {
 } from '@aws-sdk/client-transcribe';
 import {S3Client} from '@aws-sdk/client-s3';
 
-export class VoiceToTextService {
+export class TranscriptionService {
   private transcribeClient: TranscribeClient;
   private s3Client: S3Client;
   private region: string;
   private outputBucket: string;
 
   constructor(region: string, accessKeyId: string, secretAccessKey: string) {
-    // // Configure AWS credentials and region
-    // AWS.config.update({region, accessKeyId, secretAccessKey});
-
     // Create a new TranscribeService object
     this.transcribeClient = new TranscribeClient({
       region,

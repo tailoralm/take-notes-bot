@@ -2,7 +2,10 @@ import axios from 'axios';
 import fs from 'fs';
 import * as path from 'path';
 
-export async function downloadFile(fileUrl: string, path: string) {
+export async function downloadFile(
+  fileUrl: string,
+  path: string
+): Promise<string> {
   const response = await axios({
     method: 'GET',
     url: fileUrl,
@@ -14,7 +17,7 @@ export async function downloadFile(fileUrl: string, path: string) {
   response.data.pipe(fs.createWriteStream(uniquePath));
 
   return new Promise((resolve, reject) => {
-    response.data.on('end', () => resolve(path));
+    response.data.on('end', () => resolve(uniquePath));
     response.data.on('error', reject);
   });
 }
