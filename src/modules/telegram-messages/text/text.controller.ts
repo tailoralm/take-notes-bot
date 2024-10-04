@@ -12,17 +12,12 @@ export default class SaveVoiceController {
     const dateTime = GeneralUtils.formatFullDateTime(new Date());
     const logEntry = `${dateTime}: ${message.text}\n`;
 
-    const nameFile = `${EFolders.notes}/${this.getStringYearMonth()}.log`;
+    const nameFile = `${EFolders.notes}.log`;
 
     fs.appendFile(nameFile, logEntry, err => {
       if (err) {
         console.error('Error logging message:', err);
       }
     });
-  }
-
-  private getStringYearMonth() {
-    const today = new Date();
-    return `${today.getFullYear()}_${today.getMonth() + 1}`;
   }
 }
