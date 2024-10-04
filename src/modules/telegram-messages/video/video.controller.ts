@@ -1,7 +1,7 @@
-import {Context} from 'telegraf';
-import {Message} from 'typegram';
+import { Context } from 'telegraf';
+import { Message } from 'typegram';
 import SaveFilesAbstractController from '../../../shared/abstract-controllers/save-files.abstract.controller';
-import {EFolders} from '../../../shared/enums/folders.enum';
+import { EFolders } from '../../../shared/enums/folders.enum';
 
 export default class VideoController extends SaveFilesAbstractController {
   constructor(ctx: Context, folder = EFolders.videos) {
