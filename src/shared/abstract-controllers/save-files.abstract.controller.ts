@@ -7,7 +7,10 @@ export default abstract class SaveFilesAbstractController {
     protected ctx: Context,
     private folder = EFolders.general
   ) {}
-  async donwloadAndSaveFile(fileId: string, fileName: string): Promise<string> {
+  protected async donwloadAndSaveFile(
+    fileId: string,
+    fileName: string
+  ): Promise<string> {
     const fileUrl = await this.ctx.telegram.getFileLink(fileId);
     const filePath = `${this.folder}/${fileName}`;
     console.log('Saving: ', filePath);
