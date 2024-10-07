@@ -1,4 +1,3 @@
-import VoiceToTextRoutine from '@shared/services/aws/voice-to-text.service';
 import nodeSchedule from 'node-schedule';
 export default class RoutinesController {
   constructor() {}
