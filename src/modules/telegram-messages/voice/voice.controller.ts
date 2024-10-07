@@ -34,8 +34,8 @@ export default class VoiceController extends SaveFilesAbstractController {
   ) {
     const path = await super.donwloadAndSaveFile(voiceFileId, fileName);
     await this.voiceProcessorService.uploadVoiceFileToS3(path);
-    this.voiceProcessorService.moveVoiceFileToProcessedFolder(path);
     await this.voiceProcessorService.listAndTranscribeFiles();
+    this.voiceProcessorService.moveVoiceFileToProcessedFolder(path);
   }
 
   protected getFilename(text: string): string {

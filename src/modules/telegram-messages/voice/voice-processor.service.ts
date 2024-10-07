@@ -56,7 +56,7 @@ export default class VoiceProcessorService {
 
   async listAndTranscribeFiles(): Promise<void> {
     try {
-      const listParams = { Bucket: AWS_VOICES_S3.voicesToTranscribe };
+      const listParams = { Bucket: AWS_VOICES_S3.voicesToTranscribe, Delimiter: '/' };
       const listResponse = await this.s3Client.send(
         new ListObjectsCommand(listParams)
       );
@@ -68,18 +68,43 @@ export default class VoiceProcessorService {
         for (const file of listResponse.Contents) {
           this.logger.logInfo(file);
           if (file.Key && file.Key.includes('.ogg')) {
-            await this.transcriptionService
+            const startResponse = await this.transcriptionService
               .startTranscriptionJob(
                 file.Key,
                 'pt-BR',
                 `s3://${AWS_VOICES_S3.voicesToTranscribe}/${file.Key}`
-              )
-              .then(() => this.moveFileToProcessedBucket(file.Key!));
+              );
+            await this.awaitToFinishAndMove(startResponse);
           }
         }
       }
     } catch (error: any) {
       this.logger.logError('Error creating transcription job -', error);
+    }
+  }
+
+  private async awaitToFinishAndMove(startResponse: any){
+    let jobStatus = "IN_PROGRESS";
+    while (jobStatus === "IN_PROGRESS") {
+      const jobDetails = await this.transcriptionService.getTranscriptionJob(startResponse.TranscriptionJob.JobName);
+      if(!jobDetails.TranscriptionJobStatus) {
+        console.error("Transcription job failed: no JobStatus");
+        break;
+      }
+
+      jobStatus = jobDetails.TranscriptionJobStatus;
+
+      if (jobStatus === "COMPLETED") {
+        console.log("Transcription job completed!");
+        // You can now access the transcription file
+        break;
+      } else if (jobStatus === "FAILED") {
+        console.error("Transcription job failed:", jobDetails.FailureReason);
+        break;
+      }
+
+      // Wait for a few seconds before polling again
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   }
 

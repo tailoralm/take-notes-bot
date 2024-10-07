@@ -23,7 +23,7 @@ export class TranscriptionService {
     languageCode: LanguageCode,
     mediaFileUri: string,
     mediaFormat: MediaFormat = 'ogg'
-  ): Promise<void> {
+  ) {
     // Start the transcription job
     const params = {
       TranscriptionJobName: jobName,
@@ -36,12 +36,12 @@ export class TranscriptionService {
     await this.transcribeClient.send(new StartTranscriptionJobCommand(params));
   }
 
-  async getTranscriptionJobStatus(jobName: string): Promise<string> {
+  async getTranscriptionJob(jobName: string) {
     // Get transcription job status
     const params = { TranscriptionJobName: jobName };
     const { TranscriptionJob } = await this.transcribeClient.send(
       new GetTranscriptionJobCommand(params)
     );
-    return TranscriptionJob!.TranscriptionJobStatus!;
+    return TranscriptionJob!;
   }
 }
