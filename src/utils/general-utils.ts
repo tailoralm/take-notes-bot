@@ -41,7 +41,7 @@ export function ensureDirectoryExistence(filePath: string) {
   if (fs.existsSync(dirname)) return;
 
   ensureDirectoryExistence(dirname);
-  fs.mkdirSync(dirname, {recursive: true});
+  fs.mkdirSync(dirname, { recursive: true });
 }
 
 export function formatFullDateTime(date: Date): string {
@@ -53,4 +53,12 @@ export function formatFullDateTime(date: Date): string {
   const seconds = date.getSeconds().toString().padStart(2, '0');
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+export function appendNotesFile(nameFile: string, logEntry: string) {
+  fs.appendFile(nameFile, logEntry, err => {
+    if (err) {
+      console.error('Error logging message:', err);
+    }
+  });
 }

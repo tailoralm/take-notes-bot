@@ -7,6 +7,11 @@ export default class LoggerUtils {
     console.error(`[${date}] ${this.tag}:`, message, error.message);
   }
 
+  logWarn(message: any, ...optionalParams: any[]) {
+    const date = GeneralUtils.formatFullDateTime(new Date());
+    console.warn(`[${date}] ${this.tag}:`, message, ...optionalParams);
+  }
+
   logInfo(message: any, ...optionalParams: any[]) {
     const date = GeneralUtils.formatFullDateTime(new Date());
     console.log(`[${date}] ${this.tag}:`, message, ...optionalParams);

@@ -1,7 +1,7 @@
 import { Context } from 'telegraf';
 import { Message } from 'typegram';
-import SaveFilesAbstractController from '../../../shared/abstract-controllers/save-files.abstract.controller';
-import { EFolders } from '../../../shared/enums/folders.enum';
+import SaveFilesAbstractController from '@shared/abstract-controllers/save-files.abstract.controller';
+import { EFolders } from '@shared/enums/folders.enum';
 import VoiceProcessorService from './voice-processor.service';
 
 export default class VoiceController extends SaveFilesAbstractController {

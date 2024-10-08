@@ -33,7 +33,9 @@ export class TranscriptionService {
       OutputBucketName: AWS_VOICES_S3.transcribedTextVoices,
     };
 
-    await this.transcribeClient.send(new StartTranscriptionJobCommand(params));
+    return await this.transcribeClient.send(
+      new StartTranscriptionJobCommand(params)
+    );
   }
 
   async getTranscriptionJob(jobName: string) {
