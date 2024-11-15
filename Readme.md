@@ -1,5 +1,7 @@
 # Telegram Files & Notes Bot
 
+This project will be deprecated soon and replaced by the version in python: [take-notes-bot-py](https://github.com/tailoralm/take-notes-bot-py)
+
 This project focuses on developing a Telegram bot designed to assist users in saving files, such as receipts, documents, photos and notes directly from Telegram to a server. Built using Telegraf.
 
 ## Recomentations
